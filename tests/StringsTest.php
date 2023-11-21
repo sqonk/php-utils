@@ -120,4 +120,18 @@ class StringsTest extends TestCase
     $input = "\xe2\x80\x98ab\xe2\x80\x9cc\xe2\x80\x9312\xe2\x80\xa63";
     $this->assertSame(expected:$exp, actual:str_clean($input));
   }
+  
+  function testIsStringable(): void 
+  {
+    $this->assertSame(true, is_stringable('abc'));
+    $this->assertSame(true, is_stringable(2));
+    $this->assertSame(false, is_stringable([1,2,3]));
+    $this->assertSame(true, is_stringable(5.3));
+    $this->assertSame(false, is_stringable(new class() {}));
+    $this->assertSame(true, is_stringable(new class() {
+      function __tostring(): string {
+        return "test";
+      }
+    }));
+  }
 }
