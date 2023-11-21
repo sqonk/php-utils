@@ -24,7 +24,7 @@
  * -- parameters:
  * @param array<mixed> $array The input array.
  * 
- * @return The last element in the array or FALSE if the array is empty.
+ * @return mixed The last element in the array or FALSE if the array is empty.
  */
 function array_last(array $array): mixed
 {
@@ -38,7 +38,7 @@ function array_last(array $array): mixed
  * -- parameters:
  * @param array<mixed> $array The input array.
  * 
- * @return The first element in the array or FALSE if the array is empty.
+ * @return mixed The first element in the array or FALSE if the array is empty.
  */
 function array_first(array $array): mixed
 {
@@ -56,7 +56,6 @@ function array_first(array $array): mixed
  * -- parameters:
  * @param array<mixed> $array The array to extract the items from.
  * @param int $amount The amount of items to remove.
- * @param ?array<mixed> &$poppedItems
  *
  * @return array<mixed> An array of the items that were removed.
  *

@@ -6,7 +6,7 @@
 [str_popex](#str_popex)
 [str_shiftex](#str_shiftex)
 [str_clean](#str_clean)
-[var_is_stringable](#var_is_stringable)
+[is_stringable](#is_stringable)
 
 ------
 ##### str\_multipop
@@ -87,9 +87,9 @@ NOTE: This method is _not identical_ to the strings::clean() method in phext-cor
 
 
 ------
-##### var\_is\_stringable
+##### is\_stringable
 ```php
-function var_is_stringable(mixed $value) : bool
+function is_stringable(mixed $value) : bool
 ```
 Is the supplied variable capable of being transformed into a string?
 

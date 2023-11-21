@@ -17,7 +17,7 @@ Return the first element in an array. If the array is associative then the value
 
 - **array<mixed>** $array The input array.
 
-**Returns:**  The first element in the array or `FALSE` if the array is empty.
+**Returns:**  mixed The first element in the array or `FALSE` if the array is empty.
 
 
 ------
@@ -29,7 +29,7 @@ Return the last element in an array.
 
 - **array<mixed>** $array The input array.
 
-**Returns:**  The last element in the array or `FALSE` if the array is empty.
+**Returns:**  mixed The last element in the array or `FALSE` if the array is empty.
 
 
 ------
@@ -41,7 +41,6 @@ Modify the input array by popping one or more elements off the end.
 
 - **array<mixed>** $array The array to extract the items from.
 - **int** $amount The amount of items to remove.
-- **?array<mixed>** &$poppedItems
 
 **Returns:**  array<mixed> An array of the items that were removed.
 
