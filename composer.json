@@ -1,0 +1,27 @@
+{
+    "name": "sqonk/php-utils",
+    "description": "A minimal set of methods for strings and arrays. This library replaces php-strlib and to an extent phext-core, depending on your needs.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Theo Howell",
+            "email": "sqonk@sqonk.com.au"
+        }
+    ],
+	"keywords": ["strings","arrays"],
+	"autoload": {
+		"files": [
+      "src/strings.php",
+      "src/arrays.php",
+      "src/other.php"
+    ]
+    },
+    "require": {
+    	"php": "^8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^1.10"
+    }
+}
