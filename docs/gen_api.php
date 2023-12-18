@@ -4,53 +4,69 @@ require '../vendor/autoload.php';
 
 function formatComment($comment)
 {
-  $comment = trim(str_replace(['/**', '*/'], '', $comment));
-  if (! $comment) {
-    $comment = "No documentation available.";
-  } else {
-    $comment = str_replace('*', '', $comment);
-    $comment = implode("\n", array_map(fn ($line) => trim($line), explode("\n", $comment)));
+    $comment = trim(str_replace(['/**', '*/'], '', $comment));
+    if (! $comment)
+        $comment = "No documentation available.";
+    else {
+        $comment = str_replace('*', '', $comment);
+        $comment = implode("\n", array_map(fn($line) => trim($line), explode("\n", $comment)));
         
-    $comment = str_replace(['NULL', 'TRUE', 'FALSE'], ["`NULL`", "`TRUE`", "`FALSE`"], $comment);
-    $comment = implode("\n\n", array_map(function ($para) {
-      if (str_contains($para, '[md-block]')) {
-        $pos = strpos($para, '[md-block]');
-        $nl = strpos($para, "\n", $pos+1);
+        $comment = str_replace(['NULL', 'TRUE', 'FALSE'], ["`NULL`", "`TRUE`", "`FALSE`"], $comment);
+        $comment = implode("\n\n", array_map(function($para) {
+            if (str_contains(haystack:$para, needle:'[md-block]')) {
+                $pos = strpos($para, '[md-block]');
+                $nl = strpos($para, "\n", $pos+1);
     
-        $start = $pos > 0 ? substr($para, 0, $pos) : '';
-        $para = $start.substr($para, $nl);
-      } elseif (! str_contains($para, '-- parameters:')) {
-        // standard paragraph
-        if (! str_starts_with(trim($para), '```') and ! str_starts_with(trim($para), '>')) {
-          $para = str_replace(["\n", "\t", "@return", "@throws", "@see"], [" ", " ", "**Returns:** ", "\n**Throws:** ", "\n**See:** "], $para);
-        }
-      } else {
-        // parameter/option listing
-        $lines = explode("\n", $para);
-        $filtered = [];
-        foreach ($lines as $line) {
-          $line = trim($line);
-          if (! str_starts_with($line, '-- parameters:')) {
-            if (str_starts_with($line, '@param')) {
-              $line = '- **'.trim(substr($line, 7));
-              $line = str_replace("\t", " ", $line);
-              $line = substr_replace($line, '** ', strpos($line, ' ', 4), 1);
-            } elseif ($line == '*') {
-              $line = "";
-            } else {
-              $line = str_replace(["----", "---", '--'], ["\t\t\t-", "\t\t-", "\t-"], $line);
+                $start = $pos > 0 ? substr($para, 0, $pos) : '';
+                $para = $start.substr($para, $nl);
             }
-            if ($line) {
-              $filtered[] = str_replace("\n", ' ', $line);
+            else if (! str_contains(haystack:$para, needle:'-- parameters:'))
+            {
+                // standard paragraph
+                if (! str_starts_with(trim($para), '```') and ! str_starts_with(trim($para), '>'))
+                    $para = str_replace(["\n", "\t", "@return", "@throws", "@see"], [" ", " ", "**Returns:** ", "\n**Throws:** ", "\n**See:** "], $para);
             }
-          }
+            else
+            {
+                // parameter/option listing
+                $lines = explode("\n", $para);
+                $filtered = [];
+                foreach ($lines as $line) {
+                    $line = trim($line);
+                    if (! str_starts_with($line, '-- parameters:')) {
+                        if (str_starts_with($line, '@param')) {
+                            $line = '- **'.trim(substr($line, 7));
+                            $line = str_replace("\t", " ", $line);
+                            $line = substr_replace($line, '** ', strpos($line, ' ', 4), 1); 
+                        }
+                        else if ($line == '*')
+                            $line = "";
+                        else {
+                            $line = str_replace(["----", "---", '--'], ["\t\t\t-", "\t\t-", "\t-"], $line);
+                        }
+                        if ($line)
+                            $filtered[] = str_replace("\n", ' ', $line);
+                    }
+                }
+                $para = implode("\n", $filtered);
+            }
+            return $para;
+        }, explode("\n\n", $comment)));
+    }
+    return $comment;
+}
+
+function flattenComboTypes(array $types) {
+    $out = [];
+    foreach ($types as $t) {
+        if ($t instanceof ReflectionUnionType || $t instanceof ReflectionIntersectionType) {
+            array_push($out, flattenComboTypes($t->getTypes()));
         }
-        $para = implode("\n", $filtered);
-      }
-      return $para;
-    }, explode("\n\n", $comment)));
-  }
-  return $comment;
+        else {
+            $out[] = $t;
+        }
+    }
+    return $out;
 }
 
 
@@ -76,7 +92,13 @@ function genFunctions(string $fileName, array $methods)
     foreach ($method->getParameters() as $p) {
       $str = '';
       if ($type = $p->getType()) {
-        $str .= $type->getName()." ";
+          if ($type instanceof ReflectionUnionType) {
+              $names = implode('|', array_map(fn($t) => $t->getName(), flattenComboTypes($type->getTypes())));
+              $str .= "$names ";
+          }
+          else {
+              $str .= $type->getName()." ";
+          }
       }
             
       if ($p->isVariadic()) {
@@ -123,7 +145,7 @@ function main()
 {
   genFunctions('strings', ['str_multipop', 'str_multishift', 'str_popex', 'str_shiftex', 'str_clean', 'is_stringable']);
   genFunctions('arrays', ['array_first', 'array_last', 'array_multipop', 'array_multishift', 'array_head', 'array_tail']);
-  genFunctions('other', ['bool2str']);
+  genFunctions('other', ['bool2str', 'constrain']);
 }
 
 main();
