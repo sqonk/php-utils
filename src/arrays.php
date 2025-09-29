@@ -1,52 +1,58 @@
-<?php declare(strict_types = 0);
-/**
-*
-* php-utils
-*
-* @package	  php-utils
-* @subpackage	array-globals
-* @version		1
-*
-* @license		MIT see license.txt
-* @copyright	2021 Sqonk Pty Ltd.
-*
-*
-* This file is distributed
-* on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-* express or implied. See the License for the specific language governing
-* permissions and limitations under the License.
-*/
+<?php
 
-
+declare(strict_types=0);
 /**
- * Return the last element in an array.
  *
- * -- parameters:
- * @param array<mixed> $array The input array.
- * 
- * @return mixed The last element in the array or FALSE if the array is empty.
+ * php-utils
+ *
+ * @package	  php-utils
+ * @subpackage	array-globals
+ * @version		1
+ *
+ * @license		MIT see license.txt
+ * @copyright	2021 Sqonk Pty Ltd.
+ *
+ *
+ * This file is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
-function array_last(array $array): mixed
-{
-  return end($array);
+
+
+if (!function_exists('array_last')) {
+  /**
+   * Return the last element in an array.
+   *
+   * -- parameters:
+   * @param array<mixed> $array The input array.
+   * 
+   * @return mixed The last element in the array or FALSE if the array is empty.
+   */
+  function array_last(array $array): mixed
+  {
+    return end($array);
+  }
 }
 
-/**
- * Return the first element in an array. If the array is associative then the value corresponding
- * to the first key is sought.
- *
- * -- parameters:
- * @param array<mixed> $array The input array.
- * 
- * @return mixed The first element in the array or FALSE if the array is empty.
- */
-function array_first(array $array): mixed
-{
-  if (count($array) > 0) {
-    $keys = array_keys($array);
-    return $array[$keys[0]];
+if (!function_exists('array_first')) {
+  /**
+   * Return the first element in an array. If the array is associative then the value corresponding
+   * to the first key is sought.
+   *
+   * -- parameters:
+   * @param array<mixed> $array The input array.
+   * 
+   * @return mixed The first element in the array or FALSE if the array is empty.
+   */
+  function array_first(array $array): mixed
+  {
+    if (count($array) > 0) {
+      $keys = array_keys($array);
+      return $array[$keys[0]];
+    }
+    return false;
   }
-  return false;
 }
 
 
@@ -111,11 +117,11 @@ function array_head(array $array, int $amount): array
   if ($amount < 1) { // @phpstan-ignore-line
     throw new \Exception("Amount specified must be 1 or greater, $amount given.");
   }
-     
+
   if ($amount >= count($array)) {
     return $array;
   }
-  
+
   return array_slice($array, 0, $amount);
 }
 
@@ -134,11 +140,11 @@ function array_tail(array $array, int $amount): array
   if ($amount < 1) { // @phpstan-ignore-line
     throw new \Exception("Amount specified must be 1 or greater, $amount given.");
   }
-     
+
   $total = count($array);
   if ($amount >= $total) {
     return $array;
   }
-  
-  return array_slice($array, $total-$amount);
+
+  return array_slice($array, $total - $amount);
 }
