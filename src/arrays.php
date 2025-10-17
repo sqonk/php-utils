@@ -162,7 +162,7 @@ if (!function_exists('array_choose')) {
    *
    * ``` php
    * $numbers = [1,2,3,4,5,6,7,8,9,10];
-   * $choice = arrays::choose($numbers);
+   * $choice = array_choose($numbers);
    * // return a random selection from provided array.
    * ```
    */
