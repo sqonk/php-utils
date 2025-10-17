@@ -7,6 +7,7 @@
 [array_multishift](#array_multishift)
 [array_head](#array_head)
 [array_tail](#array_tail)
+[array_choose](#array_choose)
 
 ------
 ##### array\_first
@@ -88,6 +89,26 @@ Return the last part of the given array containing up to $amount of items from t
 - **positive-int** $amount The amount of items in the resulting array.
 
 **Returns:**  array<mixed> The selected portion of the array.
+
+
+------
+##### array\_choose
+```php
+function array_choose(array $dataSet) : mixed
+```
+Randomly choose an item from the given array. An empty array will always return null.
+
+- **array<mixed>** $dataSet The array to select an element from.
+
+**Returns:**  mixed The randomly selected value.
+
+Example:
+
+``` php
+$numbers = [1,2,3,4,5,6,7,8,9,10];
+$choice = arrays::choose($numbers);
+// return a random selection from provided array.
+```
 
 
 ------

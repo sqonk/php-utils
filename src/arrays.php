@@ -148,3 +148,31 @@ function array_tail(array $array, int $amount): array
 
   return array_slice($array, $total - $amount);
 }
+
+if (!function_exists('array_choose')) {
+  /**
+   * Randomly choose an item from the given array. An empty array will always return null.
+   *
+   * -- parameters:
+   * @param array<mixed> $dataSet The array to select an element from.
+   *
+   * @return mixed The randomly selected value.
+   *
+   * Example:
+   *
+   * ``` php
+   * $numbers = [1,2,3,4,5,6,7,8,9,10];
+   * $choice = arrays::choose($numbers);
+   * // return a random selection from provided array.
+   * ```
+   */
+  function array_choose(array $dataSet): mixed
+  {
+    if (count($dataSet) == 0) {
+      return null;
+    }
+
+    $idxKey = array_rand($dataSet);
+    return $dataSet[$idxKey];
+  }
+}

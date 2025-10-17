@@ -144,7 +144,7 @@ function genFunctions(string $fileName, array $methods)
 function main()
 {
   genFunctions('strings', ['str_multipop', 'str_multishift', 'str_popex', 'str_shiftex', 'str_clean', 'is_stringable']);
-  genFunctions('arrays', ['array_first', 'array_last', 'array_multipop', 'array_multishift', 'array_head', 'array_tail']);
+  genFunctions('arrays', ['array_first', 'array_last', 'array_multipop', 'array_multishift', 'array_head', 'array_tail', 'array_choose']);
   genFunctions('other', ['bool2str', 'constrain']);
 }
 
