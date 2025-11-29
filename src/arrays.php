@@ -22,7 +22,10 @@ declare(strict_types=0);
 
 if (!function_exists('array_last')) {
   /**
-   * Return the last element in an array.
+   * Return the last element in an array. 
+   * 
+   * This method is not declared in version of PHP 8.5 and later
+   * as it is built directly into the language.
    *
    * -- parameters:
    * @param array<mixed> $array The input array.
@@ -39,6 +42,9 @@ if (!function_exists('array_first')) {
   /**
    * Return the first element in an array. If the array is associative then the value corresponding
    * to the first key is sought.
+   * 
+   * This method is not declared in version of PHP 8.5 and later
+   * as it is built directly into the language.
    *
    * -- parameters:
    * @param array<mixed> $array The input array.

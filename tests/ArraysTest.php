@@ -9,14 +9,22 @@ class ArraysTest extends TestCase
 {
   public function testFirst()
   {
-    $arr = [1, 2, 3];
-    $this->assertSame(1, array_first($arr));
+    if (version_compare(PHP_VERSION, '8.5', '>=')) {
+      $this->markTestSkipped('Obsolete in PHP versions 8.5 and later. Method built into language.');
+    } else {
+      $arr = [1, 2, 3];
+      $this->assertSame(1, array_first($arr));
+    }
   }
 
   public function testLast()
   {
-    $arr = [1, 2, 3];
-    $this->assertSame(3, array_last($arr));
+    if (version_compare(PHP_VERSION, '8.5', '>=')) {
+      $this->markTestSkipped('Obsolete in PHP versions 8.5 and later. Method built into language.');
+    } else {
+      $arr = [1, 2, 3];
+      $this->assertSame(3, array_last($arr));
+    }
   }
 
   public function testHead(): void

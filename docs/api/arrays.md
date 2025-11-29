@@ -16,6 +16,8 @@ function array_first(array $array) : mixed
 ```
 Return the first element in an array. If the array is associative then the value corresponding to the first key is sought.
 
+This method is not declared in version of PHP 8.5 and later as it is built directly into the language.
+
 - **array<mixed>** $array The input array.
 
 **Returns:**  mixed The first element in the array or `FALSE` if the array is empty.
@@ -27,6 +29,8 @@ Return the first element in an array. If the array is associative then the value
 function array_last(array $array) : mixed
 ```
 Return the last element in an array.
+
+This method is not declared in version of PHP 8.5 and later as it is built directly into the language.
 
 - **array<mixed>** $array The input array.
 
